@@ -122,7 +122,7 @@ void setup() {
 
   Serial.println("Starting Server...");
 
-  BLEDevice::init("ESP32 Server");
+  BLEDevice::init("LinkGlove");
 
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new ServerCallbacks());
