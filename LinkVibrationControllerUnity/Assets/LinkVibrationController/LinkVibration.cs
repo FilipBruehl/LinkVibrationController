@@ -5,7 +5,8 @@ namespace LinkVibrationController
 {
     /// <summary>
     /// Unity class for using the LinkVibrationControllerClient
-    /// Asign this script to a gameobject and extend it or derive a new script from this base class
+    /// Asign this script to a gameobject and use Vibrate function.
+    /// If you want to extend the functionality please use this as a base class and derive from it
     /// </summary>
     public class LinkVibration : MonoBehaviour
     {
@@ -32,6 +33,16 @@ namespace LinkVibrationController
                 client.Disconnect();
             }
 
+        }
+
+        /// <summary>
+        /// Public function to vibrate a certain motor for a given duration
+        /// </summary>
+        /// <param name="id">Id of the motor</param>
+        /// <param name="duration">Duration</param>
+        public void Vibrate(int id, int duration)
+        {
+            client.Vibrate(id, duration);
         }
     }
 }

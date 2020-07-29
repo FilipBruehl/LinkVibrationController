@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 302804844}
   - component: {fileID: 302804843}
   - component: {fileID: 302804842}
+  - component: {fileID: 302804845}
   m_Layer: 5
   m_Name: ButtonVibrateLong
   m_TagString: Untagged
@@ -336,18 +337,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 302804843}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2105316925}
-        m_MethodName: VibrateLong
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &302804843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +373,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 302804840}
   m_CullTransparentMesh: 0
+--- !u!114 &302804845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302804840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a83d08e6679cdd439b2c1e34ac257ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  duration: 1000
+  LinkVibrationController: {fileID: 2105316924}
 --- !u!1 &358926032
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +725,7 @@ GameObject:
   - component: {fileID: 2091133257}
   - component: {fileID: 2091133256}
   - component: {fileID: 2091133255}
+  - component: {fileID: 2091133258}
   m_Layer: 5
   m_Name: ButtonVibrateShort
   m_TagString: Untagged
@@ -786,18 +792,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2091133256}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2105316925}
-        m_MethodName: VibrateShort
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2091133256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,6 +828,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091133253}
   m_CullTransparentMesh: 0
+--- !u!114 &2091133258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091133253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a83d08e6679cdd439b2c1e34ac257ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  duration: 500
+  LinkVibrationController: {fileID: 2105316924}
 --- !u!1 &2105316924
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +869,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2105316924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a83d08e6679cdd439b2c1e34ac257ec, type: 3}
+  m_Script: {fileID: 11500000, guid: df8c812bea77c6f4cb23cf202aa97012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &2105316926

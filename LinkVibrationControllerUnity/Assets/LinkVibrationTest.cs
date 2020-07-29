@@ -1,15 +1,26 @@
-﻿using LinkVibrationController;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using LinkVibrationController;
 
-public class LinkVibrationTest : LinkVibration
+public class LinkVibrationTest : MonoBehaviour
 {
-    public void VibrateShort()
+    public int id;
+    public int duration;
+
+    public GameObject LinkVibrationController;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        client.Vibrate(0, 500);
+        gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            LinkVibrationController.GetComponent<LinkVibration>().Vibrate(id, duration);
+        });
     }
 
-    public void VibrateLong()
+    // Update is called once per frame
+    void Update()
     {
-        client.Vibrate(0, 1000);
+        
     }
 }
