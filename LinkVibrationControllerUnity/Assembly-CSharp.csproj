@@ -63,7 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LinkVibrationController\LinkVibrationControllerClient.cs" />
+    <Compile Include="Assets\LinkVibrationController\client\LinkVibrationControllerClient.cs" />
+    <Compile Include="Assets\LinkVibrationController\LinkVibration.cs" />
     <Compile Include="Assets\LinkVibrationController\models\Vibration.cs" />
     <Compile Include="Assets\LinkVibrationController\models\VibratorId.cs" />
     <Compile Include="Assets\LinkVibrationTest.cs" />

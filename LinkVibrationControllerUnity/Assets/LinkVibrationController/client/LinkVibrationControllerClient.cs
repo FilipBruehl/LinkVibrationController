@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using WebSocketSharp;
 
-namespace LinkVibrationController
+namespace LinkVibrationController.Client
 {
     /// <summary>
     /// Singleton class to provide access to the websocket server
@@ -128,7 +128,6 @@ namespace LinkVibrationController
         }
 
         #endregion
-
     }
 }
 
