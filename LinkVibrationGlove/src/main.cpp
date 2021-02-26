@@ -1,16 +1,14 @@
-#include <Arduino.h>
+#include "Arduino.h"
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-
-#include <sstream>
-#include <iostream>
-#include <vector>
-
+#include "vibration.h"
+#include "pin.h"
 
 #define SERVICE_UUID        "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
 #define CHARACTERISTIC_UUID "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -22,50 +20,24 @@ BLECharacteristic* pCharacteristic;
 bool deviceConnected = false;
 std::string message;
 
-std::vector<int> pins{15, 2, 4, 5, 18};
+std::vector<Pin*> pins{new Pin(16), new Pin(17), new Pin(5), new Pin(21), new Pin(3), new Pin(14), new Pin(27), new Pin(33), new Pin(32), new Pin(35)};
 
-std::vector<std::string> split(const std::string& string) {
-  std::vector<std::string> strings;
-  std::istringstream f(string);
-  std::string s;
-  while(std::getline(f, s, ' ')) {
-    strings.push_back(s);
-  }
-  return strings;
-};
-
-int convert_string_int(const std::string& string) {
-    std::stringstream s(string);
-    int value;
-    s >> value;
-    return value;
-};
-
-class Vibration {
-    private:
-        int id;
-        int duration;
-
-    public:
-        Vibration(const std::vector<std::string>& commands) {
-          this->id = convert_string_int(commands[1]);
-          this->duration = convert_string_int(commands[2]);
-        };
-        ~Vibration() {};
-
-        int const& get_id() const { return this->id; };
-        int const& get_duration() const { return this->duration; };
-};
-
-void VibrateCode(void* pvParameters) {
-  Vibration vib = *(Vibration*) pvParameters;
-  Serial.printf("Starting Vibration {%i} {%i}\n", vib.get_id(), vib.get_duration());
-  digitalWrite(pins[vib.get_id()], HIGH);
-  delay(vib.get_duration());
-  digitalWrite(pins[vib.get_id()], LOW);
-  Serial.printf("Vibration {%i} finished\n", vib.get_id());
-  vTaskDelete(NULL);
-};
+void vibrateCode(void* pvParameters) {
+    Vibration vib = *(Vibration*) pvParameters;
+    Pin* pin = pins[vib.get_id()];
+    if(pin->getRunning() == true) {
+        Serial.printf("Pin {%id} already vibrating!\n", pin->getPin());
+    } else {
+        Serial.printf("Starting Vibration {%i} {%i} on pin {%i}\n", vib.get_id(), vib.get_duration(), pin->getPin());
+        pin->setRunning(true);
+        digitalWrite(pin->getPin(), HIGH);
+        delay(vib.get_duration());
+        digitalWrite(pin->getPin(), LOW);
+        pin->setRunning(false);
+        Serial.printf("Vibration {%i} finished\n", vib.get_id());
+    }
+    vTaskDelete(NULL);
+}
 
 class ServerCallbacks: public BLEServerCallbacks {
   void onConnect(BLEServer* pServer) {
@@ -88,12 +60,12 @@ class Callbacks: public BLECharacteristicCallbacks {
       }
       Serial.println();
       if(message.rfind("vibrate") == 0) {
-        std::vector<std::string> commands = split(message);
+        Commands commands = split(message);
         Vibration* vib = new Vibration(commands);
         Serial.printf("Vibration {%i} {%i}\n", vib->get_id(), vib->get_duration());
         TaskHandle_t task;
         xTaskCreatePinnedToCore(
-          &VibrateCode,
+          &vibrateCode,
           "Vibrate",
           2048,
           (void*) vib,
@@ -113,9 +85,9 @@ void setup() {
   
   Serial.println("init pins...");
 
-  for(const auto& pin: pins) {
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
+  for(const Pin* pin: pins) {
+    pinMode(pin->getPin(), OUTPUT);
+    digitalWrite(pin->getPin(), LOW);
   }
 
   Serial.println("init pins finished");
